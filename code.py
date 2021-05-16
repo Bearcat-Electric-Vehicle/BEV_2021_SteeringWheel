@@ -28,9 +28,9 @@ BLACK = 0x000000
 
 #Define groups
 main = displayio.Group(max_size=3)
-mainScreen = displayio.Group(max_size=3)
-screen1 = displayio.Group(max_size=3)
-screen2 = displayio.Group(max_size=3)
+mainScreen = displayio.Group(max_size=5)
+screen1 = displayio.Group(max_size=5)
+screen2 = displayio.Group(max_size=5)
 
 #Import images
 image_file1 = open("/images/speed.bmp", "rb")
@@ -56,6 +56,9 @@ pin2 = AnalogIn(board.D3)
 #Text box stuff
 font = bitmap_font.load_font("/fonts/Bookman_Old_Style.bdf")
 font.load_glyphs(b'abcdefghjiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890- ()')
+bigFont = bitmap_font.load_font("/fonts/BigFont.bdf")
+bigFont.load_glyphs(b'abcdefghjiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890- ()')
+
 
 TABS_X = 5
 TABS_Y = 50
@@ -77,9 +80,24 @@ timeSinceOn2.y = TABS_Y - 35
 timeSinceOn3.x = TABS_X + 365
 timeSinceOn3.y = TABS_Y - 35
 #timeGroup.append(timeSinceOn)
-
-
 number = 0;
+
+#Speed processing
+speed = int(26) #Use pin speed value here
+speedOnes = int(speed % 10)
+speedTens = int(speed / 10)
+
+#Speed text creation
+speedBox = Label(bigFont, text=str(speedTens) + str(speedOnes), color = GREEN, max_glyphs=200, scale=2)
+speedBox.x = 125
+speedBox.y = 130
+screen1.append(speedBox)
+
+speedU = Label(font, text="mph", color = GREEN, max_glyphs=200, scale=2)
+speedU.x = 340
+speedU.y = 207
+screen1.append(speedU)
+
 '''
 feed1_label = Label(font, text=str(number), color = RED, max_glyphs=200, scale=4)
 feed1_label.x = TABS_X + 50
